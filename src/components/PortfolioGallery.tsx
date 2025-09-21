@@ -69,7 +69,7 @@ const PortfolioGallery = () => {
     : portfolioItems.filter(item => item.category === selectedCategory);
 
   return (
-    <section className="py-20 bg-white">
+    <section id="portfolio" className="py-20 bg-white">
       <div className="container-max section-padding">
         {/* Section Header */}
         <motion.div

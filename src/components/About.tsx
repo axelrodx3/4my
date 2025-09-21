@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 
 const About = () => {
   return (
-    <section className="py-20 bg-black text-white">
+    <section id="about" className="py-20 bg-black text-white">
       <div className="container-max section-padding">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -79,7 +79,15 @@ const About = () => {
               viewport={{ once: true }}
               className="pt-8"
             >
-            <button className="btn-primary">
+            <button 
+              className="btn-primary"
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
+            >
               Let&apos;s Work Together
             </button>
             </motion.div>
@@ -122,21 +130,6 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Quote Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-20 text-center"
-        >
-          <blockquote className="font-serif text-2xl md:text-3xl italic text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
-          </blockquote>
-          <cite className="block mt-6 text-primary-pink font-medium">
-            — Steve Jobs
-          </cite>
-        </motion.div>
       </div>
     </section>
   );

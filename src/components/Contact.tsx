@@ -49,7 +49,7 @@ const Contact = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section id="contact" className="py-20 bg-white">
       <div className="container-max section-padding">
         {/* Section Header */}
         <motion.div

@@ -8,9 +8,9 @@ export const siteConfig = {
   
   // These will be overridden by environment variables in production
   contact: {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@mycacamacho.com",
-    phone: process.env.NEXT_PUBLIC_PHONE || "(555) 123-4567",
-    location: process.env.NEXT_PUBLIC_LOCATION || "Los Angeles, CA",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "myca.anise@gmail.com",
+    phone: process.env.NEXT_PUBLIC_PHONE || "7422549756",
+    location: process.env.NEXT_PUBLIC_LOCATION || "Northridge, California",
   },
   
   social: {
