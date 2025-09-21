@@ -16,6 +16,7 @@ const Contact = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [sentEmail, setSentEmail] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -30,44 +31,34 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Check if EmailJS is configured
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_placeholder',
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_placeholder',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'myca.anise@gmail.com'
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'public_key_placeholder'
+      );
 
-      if (!serviceId || !templateId || !publicKey || publicKey === 'your_public_key_here') {
-        // Fallback to mailto if EmailJS not configured
-        const subject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
-        const body = encodeURIComponent(
-          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-        );
-        
-        window.location.href = `mailto:${siteConfig.contact.email}?subject=${subject}&body=${body}`;
+      if (result.status === 200) {
+        setSentEmail(formData.email);
         setSubmitStatus('success');
-        return;
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to send email');
       }
-
-      // Initialize EmailJS
-      emailjs.init(publicKey);
-
-      // Send email
-      await emailjs.send(serviceId, templateId, {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: siteConfig.contact.email,
-      });
-
-      setSubmitStatus('success');
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
     } catch (error) {
       console.error('Error sending email:', error);
       setSubmitStatus('error');
@@ -206,7 +197,7 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"
                 >
-                  ✅ Message sent successfully! I&apos;ll get back to you soon.
+                  ✅ Message sent successfully! I&apos;ll get back to you soon at {sentEmail}.
                 </motion.div>
               )}
 
@@ -216,7 +207,7 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"
                 >
-                  ❌ Failed to send message. Please try again or email me directly at {siteConfig.contact.email}
+                  ❌ Email service is currently being set up. Please email me directly at {siteConfig.contact.email} or try again later.
                 </motion.div>
               )}
             </form>

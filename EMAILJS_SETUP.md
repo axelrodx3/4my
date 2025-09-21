@@ -43,9 +43,9 @@ This message was sent from your portfolio contact form.
 1. Go to **Account** → **General**
 2. Copy your **Public Key** (e.g., `user_abc123def456`)
 
-### Step 5: Update Environment Variables
+### Step 5: Create Environment Variables
 
-Update your `.env.local` file with the actual values:
+Create a `.env.local` file in your project root with the actual values:
 
 ```bash
 # EmailJS Configuration
@@ -53,6 +53,11 @@ NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_actual_service_id
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_actual_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_actual_public_key
 ```
+
+**Important:** 
+- Create the `.env.local` file manually in your project root
+- Replace the placeholder values with your actual EmailJS credentials
+- The file is automatically ignored by git for security
 
 ### Step 6: Test the Form
 
