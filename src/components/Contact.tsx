@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Instagram, Twitter, Linkedin, Github } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,9 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -20,25 +24,56 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    
-    // Open email client
-    window.location.href = `mailto:${siteConfig.contact.email}?subject=${subject}&body=${body}`;
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Check if EmailJS is configured
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey || publicKey === 'your_public_key_here') {
+        // Fallback to mailto if EmailJS not configured
+        const subject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
+        const body = encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        );
+        
+        window.location.href = `mailto:${siteConfig.contact.email}?subject=${subject}&body=${body}`;
+        setSubmitStatus('success');
+        return;
+      }
+
+      // Initialize EmailJS
+      emailjs.init(publicKey);
+
+      // Send email
+      await emailjs.send(serviceId, templateId, {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: siteConfig.contact.email,
+      });
+
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
@@ -144,13 +179,46 @@ const Contact = () => {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary w-full flex items-center justify-center space-x-2"
+                whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                disabled={isSubmitting}
+                className={`btn-primary w-full flex items-center justify-center space-x-2 ${
+                  isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
+                }`}
               >
-                <Send size={20} />
-                <span>Send Message</span>
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} />
+                    <span>Send Message</span>
+                  </>
+                )}
               </motion.button>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"
+                >
+                  ✅ Message sent successfully! I&apos;ll get back to you soon.
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"
+                >
+                  ❌ Failed to send message. Please try again or email me directly at {siteConfig.contact.email}
+                </motion.div>
+              )}
             </form>
           </motion.div>
 
