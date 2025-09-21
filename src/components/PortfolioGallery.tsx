@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
+import { siteConfig } from '@/config/site';
 
 interface PortfolioItem {
   id: number;
@@ -19,49 +20,49 @@ const PortfolioGallery = () => {
   const portfolioItems: PortfolioItem[] = [
     {
       id: 1,
-      title: "Elegant Design",
-      category: "Web Design",
-      image: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&h=800&fit=crop&crop=center",
-      description: "A sophisticated web design showcasing modern aesthetics"
+      title: "Handmade Paper Collection",
+      category: "Paper Making",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=800&fit=crop&crop=center",
+      description: "A collection of handmade papers using traditional techniques and natural materials"
     },
     {
       id: 2,
-      title: "Creative Vision",
+      title: "Silver Gelatin Prints",
       category: "Photography",
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center",
-      description: "Capturing moments with artistic precision"
+      description: "Traditional darkroom photography using silver gelatin processes"
     },
     {
       id: 3,
-      title: "Brand Identity",
-      category: "Branding",
-      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=600&fit=crop&crop=center",
-      description: "Creating memorable brand experiences"
+      title: "Coil Built Ceramics",
+      category: "Ceramics",
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop&crop=center",
+      description: "Hand-built ceramic vessels using coil and slab techniques"
     },
     {
       id: 4,
-      title: "Digital Art",
-      category: "Digital Art",
-      image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&h=1000&fit=crop&crop=center",
-      description: "Exploring the intersection of technology and creativity"
+      title: "Woodworking Projects",
+      category: "Woodworking",
+      image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&h=1000&fit=crop&crop=center",
+      description: "Custom woodworking pieces showcasing traditional craftsmanship"
     },
     {
       id: 5,
-      title: "Minimalist Approach",
-      category: "Web Design",
-      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=700&fit=crop&crop=center",
-      description: "Less is more in this clean, focused design"
+      title: "Anthotype Experiments",
+      category: "Photography",
+      image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&h=700&fit=crop&crop=center",
+      description: "Alternative photographic processes using plant-based emulsions"
     },
     {
       id: 6,
-      title: "Abstract Expression",
-      category: "Digital Art",
-      image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=700&h=500&fit=crop&crop=center",
-      description: "Bold colors and dynamic compositions"
+      title: "Mixed Media Sculpture",
+      category: "Mixed Media",
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=700&h=500&fit=crop&crop=center",
+      description: "Combining ceramics, wood, and found materials in sculptural forms"
     }
   ];
 
-  const categories = ['All', 'Web Design', 'Photography', 'Branding', 'Digital Art'];
+  const categories = siteConfig.portfolioCategories;
 
   const filteredItems = selectedCategory === 'All' 
     ? portfolioItems 

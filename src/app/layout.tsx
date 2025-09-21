@@ -15,8 +15,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Myca - Portfolio",
-  description: "A sophisticated portfolio showcasing elegant design and creative work",
+  title: "Myca Camacho - Artist & Creative Professional",
+  description: "Artist specializing in paper making, ceramics, woodworking, and photographic processes. UCLA Art graduate with extensive experience in fine arts and creative restoration.",
 };
 
 export default function RootLayout({

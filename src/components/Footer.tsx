@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,10 +20,10 @@ const Footer = () => {
             viewport={{ once: true }}
             className="md:col-span-2"
           >
-            <h3 className="font-serif text-2xl font-bold mb-4">Myca</h3>
+            <h3 className="font-serif text-2xl font-bold mb-4">{siteConfig.name}</h3>
             <p className="text-gray-400 mb-6 max-w-md">
-              Creating beautiful, meaningful experiences through design. 
-              Let&apos;s bring your vision to life together.
+              Multidisciplinary artist specializing in traditional and contemporary techniques. 
+              From paper making to ceramics, woodworking to photographic processes.
             </p>
             <div className="flex space-x-4">
               {['Instagram', 'Twitter', 'LinkedIn', 'GitHub'].map((social) => (
@@ -68,9 +69,9 @@ const Footer = () => {
           >
             <h4 className="font-serif text-lg font-bold mb-4">Contact</h4>
             <div className="space-y-2 text-gray-400">
-              <p>hello@myca.com</p>
-              <p>+1 (555) 123-4567</p>
-              <p>San Francisco, CA</p>
+              <p>{siteConfig.contact.email}</p>
+              <p>{siteConfig.contact.phone}</p>
+              <p>{siteConfig.contact.location}</p>
             </div>
           </motion.div>
         </div>

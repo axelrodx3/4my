@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 const Hero = () => {
   return (
@@ -24,8 +25,8 @@ const Hero = () => {
           className="container-max"
         >
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-            Creative
-            <span className="block text-gradient">Vision</span>
+            {siteConfig.name.split(' ')[0]}
+            <span className="block text-gradient">{siteConfig.name.split(' ')[1]}</span>
           </h1>
           
           <motion.p
@@ -34,7 +35,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-300"
           >
-            Where elegance meets innovation. A portfolio of sophisticated design and artistic expression.
+            Artist & Creative Professional specializing in paper making, ceramics, woodworking, and photographic processes.
           </motion.p>
 
           <motion.div
@@ -56,16 +57,16 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center text-white/70"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+            className="flex flex-col items-center text-white/50"
           >
-            <span className="text-sm mb-2">Scroll to explore</span>
-            <ChevronDown size={24} />
+            <span className="text-xs mb-1">Scroll to explore</span>
+            <ChevronDown size={20} />
           </motion.div>
         </motion.div>
       </div>

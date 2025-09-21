@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ const Navigation = () => {
     { name: 'Home', href: '/' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'About', href: '/about' },
+    { name: 'Resume', href: '/resume' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -41,7 +43,7 @@ const Navigation = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="font-serif text-2xl font-bold text-black">
-              Myca
+              {siteConfig.name}
             </Link>
 
             {/* Desktop Navigation */}

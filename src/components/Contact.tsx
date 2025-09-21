@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Instagram, Twitter, Linkedin, Github } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,8 +22,23 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Portfolio Contact: ${formData.subject}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    
+    // Open email client
+    window.location.href = `mailto:${siteConfig.contact.email}?subject=${subject}&body=${body}`;
+    
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    });
   };
 
   const socialLinks = [
@@ -165,7 +181,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-black">Email</p>
-                    <p className="text-gray-600">hello@myca.com</p>
+                    <p className="text-gray-600">{siteConfig.contact.email}</p>
                   </div>
                 </motion.div>
 
@@ -181,7 +197,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-black">Phone</p>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
+                    <p className="text-gray-600">{siteConfig.contact.phone}</p>
                   </div>
                 </motion.div>
 
@@ -197,7 +213,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-medium text-black">Location</p>
-                    <p className="text-gray-600">San Francisco, CA</p>
+                    <p className="text-gray-600">{siteConfig.contact.location}</p>
                   </div>
                 </motion.div>
               </div>

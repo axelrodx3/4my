@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { siteConfig } from '@/config/site';
 
 const About = () => {
   return (
@@ -24,23 +25,21 @@ const About = () => {
 
             <div className="space-y-6 text-lg leading-relaxed text-gray-300">
               <p>
-                I&apos;m a passionate creative professional dedicated to crafting elegant, 
-                meaningful experiences through design. With a keen eye for detail and 
-                a love for clean aesthetics, I specialize in creating visual narratives 
-                that resonate with audiences.
+                I&apos;m a multidisciplinary artist and creative professional with a Bachelor&apos;s degree in Art from UCLA. 
+                My practice spans traditional and contemporary techniques, from handmade paper making and ceramics 
+                to alternative photographic processes and woodworking.
               </p>
               
               <p>
-                My work spans across digital design, photography, and brand identity, 
-                always with a focus on the intersection of beauty and functionality. 
-                I believe that great design has the power to inspire, connect, and 
-                transform the way we experience the world.
+                With extensive experience in art restoration, bookbinding, and creative assistance, I bring a unique 
+                perspective to every project. My work is grounded in traditional craftsmanship while embracing 
+                innovative approaches to material and process.
               </p>
               
               <p>
-                When I&apos;m not creating, you&apos;ll find me exploring new techniques, 
-                seeking inspiration in unexpected places, and constantly pushing 
-                the boundaries of what&apos;s possible in visual communication.
+                Currently working as an Associate at Pinacoteca Picture Props, I specialize in mending fragile, 
+                damaged paintings and everyday objects, mastering color matching and precision techniques that 
+                inform my artistic practice.
               </p>
             </div>
 
@@ -53,17 +52,10 @@ const About = () => {
               className="space-y-4"
             >
               <h3 className="font-serif text-2xl font-bold text-white mb-4">
-                What I Do
+                My Practice
               </h3>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  'Web Design',
-                  'Brand Identity',
-                  'Photography',
-                  'Digital Art',
-                  'UI/UX Design',
-                  'Creative Direction'
-                ].map((skill, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {siteConfig.skills.map((skill, index) => (
                   <motion.div
                     key={skill}
                     initial={{ opacity: 0, x: -20 }}
